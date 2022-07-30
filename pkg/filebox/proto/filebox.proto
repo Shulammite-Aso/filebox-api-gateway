@@ -60,7 +60,8 @@ message SendFileRequest {
 
   message SendFileToPersonRequest {
     string username = 1;
-    bytes file = 2;
+    string senderUsername = 2;
+    bytes file = 3;
   }
 
   message SendFileToPersonResponse {

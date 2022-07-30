@@ -9,7 +9,6 @@ import (
 )
 
 type GetFileRequestBody struct {
-	Username string `json:"username"`
 	FileName string `json:"file"`
 }
 
@@ -21,8 +20,10 @@ func GetFile(ctx *gin.Context, c proto.FileboxServiceClient) {
 		return
 	}
 
+	username, _ := ctx.Get("username")
+
 	res, err := c.GetFile(context.Background(), &proto.GetFileRequest{
-		Username: body.Username,
+		Username: username.(string),
 		FileName: body.FileName,
 	})
 

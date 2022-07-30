@@ -9,8 +9,7 @@ import (
 )
 
 type UpdateFileRequestBody struct {
-	Username string `json:"username"`
-	File     []byte `json:"file"`
+	File []byte `json:"file"`
 }
 
 func UpdateFile(ctx *gin.Context, c proto.FileboxServiceClient) {
@@ -21,8 +20,10 @@ func UpdateFile(ctx *gin.Context, c proto.FileboxServiceClient) {
 		return
 	}
 
+	username, _ := ctx.Get("username")
+
 	res, err := c.Update(context.Background(), &proto.UpdateFileRequest{
-		Username: body.Username,
+		Username: username.(string),
 		File:     body.File,
 	})
 
