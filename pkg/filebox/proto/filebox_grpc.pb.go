@@ -23,9 +23,9 @@ const _ = grpc.SupportPackageIsVersion7
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type FileboxServiceClient interface {
 	SendFile(ctx context.Context, in *SendFileRequest, opts ...grpc.CallOption) (*SendFileResponse, error)
-	Update(ctx context.Context, in *UpdateFileRequest, opts ...grpc.CallOption) (*UpdateFileResponse, error)
+	UpdateFile(ctx context.Context, in *UpdateFileRequest, opts ...grpc.CallOption) (*UpdateFileResponse, error)
 	GetFile(ctx context.Context, in *GetFileRequest, opts ...grpc.CallOption) (*GetFileResponse, error)
-	GetListOfAllFiles(ctx context.Context, in *GetListOfAllFilesResponse, opts ...grpc.CallOption) (*GetListOfAllFilesResponse, error)
+	GetListOfAllFiles(ctx context.Context, in *GetListOfAllFilesRequest, opts ...grpc.CallOption) (*GetListOfAllFilesResponse, error)
 	DeleteFile(ctx context.Context, in *DeleteFileRequest, opts ...grpc.CallOption) (*DeleteFileResponse, error)
 	SendFileToPerson(ctx context.Context, in *SendFileToPersonRequest, opts ...grpc.CallOption) (*SendFileToPersonResponse, error)
 }
@@ -40,16 +40,16 @@ func NewFileboxServiceClient(cc grpc.ClientConnInterface) FileboxServiceClient {
 
 func (c *fileboxServiceClient) SendFile(ctx context.Context, in *SendFileRequest, opts ...grpc.CallOption) (*SendFileResponse, error) {
 	out := new(SendFileResponse)
-	err := c.cc.Invoke(ctx, "/auth.FileboxService/SendFile", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/filebox.FileboxService/SendFile", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *fileboxServiceClient) Update(ctx context.Context, in *UpdateFileRequest, opts ...grpc.CallOption) (*UpdateFileResponse, error) {
+func (c *fileboxServiceClient) UpdateFile(ctx context.Context, in *UpdateFileRequest, opts ...grpc.CallOption) (*UpdateFileResponse, error) {
 	out := new(UpdateFileResponse)
-	err := c.cc.Invoke(ctx, "/auth.FileboxService/Update", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/filebox.FileboxService/UpdateFile", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -58,16 +58,16 @@ func (c *fileboxServiceClient) Update(ctx context.Context, in *UpdateFileRequest
 
 func (c *fileboxServiceClient) GetFile(ctx context.Context, in *GetFileRequest, opts ...grpc.CallOption) (*GetFileResponse, error) {
 	out := new(GetFileResponse)
-	err := c.cc.Invoke(ctx, "/auth.FileboxService/GetFile", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/filebox.FileboxService/GetFile", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *fileboxServiceClient) GetListOfAllFiles(ctx context.Context, in *GetListOfAllFilesResponse, opts ...grpc.CallOption) (*GetListOfAllFilesResponse, error) {
+func (c *fileboxServiceClient) GetListOfAllFiles(ctx context.Context, in *GetListOfAllFilesRequest, opts ...grpc.CallOption) (*GetListOfAllFilesResponse, error) {
 	out := new(GetListOfAllFilesResponse)
-	err := c.cc.Invoke(ctx, "/auth.FileboxService/GetListOfAllFiles", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/filebox.FileboxService/GetListOfAllFiles", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -76,7 +76,7 @@ func (c *fileboxServiceClient) GetListOfAllFiles(ctx context.Context, in *GetLis
 
 func (c *fileboxServiceClient) DeleteFile(ctx context.Context, in *DeleteFileRequest, opts ...grpc.CallOption) (*DeleteFileResponse, error) {
 	out := new(DeleteFileResponse)
-	err := c.cc.Invoke(ctx, "/auth.FileboxService/DeleteFile", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/filebox.FileboxService/DeleteFile", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -85,7 +85,7 @@ func (c *fileboxServiceClient) DeleteFile(ctx context.Context, in *DeleteFileReq
 
 func (c *fileboxServiceClient) SendFileToPerson(ctx context.Context, in *SendFileToPersonRequest, opts ...grpc.CallOption) (*SendFileToPersonResponse, error) {
 	out := new(SendFileToPersonResponse)
-	err := c.cc.Invoke(ctx, "/auth.FileboxService/SendFileToPerson", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/filebox.FileboxService/SendFileToPerson", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -97,9 +97,9 @@ func (c *fileboxServiceClient) SendFileToPerson(ctx context.Context, in *SendFil
 // for forward compatibility
 type FileboxServiceServer interface {
 	SendFile(context.Context, *SendFileRequest) (*SendFileResponse, error)
-	Update(context.Context, *UpdateFileRequest) (*UpdateFileResponse, error)
+	UpdateFile(context.Context, *UpdateFileRequest) (*UpdateFileResponse, error)
 	GetFile(context.Context, *GetFileRequest) (*GetFileResponse, error)
-	GetListOfAllFiles(context.Context, *GetListOfAllFilesResponse) (*GetListOfAllFilesResponse, error)
+	GetListOfAllFiles(context.Context, *GetListOfAllFilesRequest) (*GetListOfAllFilesResponse, error)
 	DeleteFile(context.Context, *DeleteFileRequest) (*DeleteFileResponse, error)
 	SendFileToPerson(context.Context, *SendFileToPersonRequest) (*SendFileToPersonResponse, error)
 	mustEmbedUnimplementedFileboxServiceServer()
@@ -112,13 +112,13 @@ type UnimplementedFileboxServiceServer struct {
 func (UnimplementedFileboxServiceServer) SendFile(context.Context, *SendFileRequest) (*SendFileResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method SendFile not implemented")
 }
-func (UnimplementedFileboxServiceServer) Update(context.Context, *UpdateFileRequest) (*UpdateFileResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method Update not implemented")
+func (UnimplementedFileboxServiceServer) UpdateFile(context.Context, *UpdateFileRequest) (*UpdateFileResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateFile not implemented")
 }
 func (UnimplementedFileboxServiceServer) GetFile(context.Context, *GetFileRequest) (*GetFileResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetFile not implemented")
 }
-func (UnimplementedFileboxServiceServer) GetListOfAllFiles(context.Context, *GetListOfAllFilesResponse) (*GetListOfAllFilesResponse, error) {
+func (UnimplementedFileboxServiceServer) GetListOfAllFiles(context.Context, *GetListOfAllFilesRequest) (*GetListOfAllFilesResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetListOfAllFiles not implemented")
 }
 func (UnimplementedFileboxServiceServer) DeleteFile(context.Context, *DeleteFileRequest) (*DeleteFileResponse, error) {
@@ -150,7 +150,7 @@ func _FileboxService_SendFile_Handler(srv interface{}, ctx context.Context, dec 
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/auth.FileboxService/SendFile",
+		FullMethod: "/filebox.FileboxService/SendFile",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(FileboxServiceServer).SendFile(ctx, req.(*SendFileRequest))
@@ -158,20 +158,20 @@ func _FileboxService_SendFile_Handler(srv interface{}, ctx context.Context, dec 
 	return interceptor(ctx, in, info, handler)
 }
 
-func _FileboxService_Update_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _FileboxService_UpdateFile_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(UpdateFileRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(FileboxServiceServer).Update(ctx, in)
+		return srv.(FileboxServiceServer).UpdateFile(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/auth.FileboxService/Update",
+		FullMethod: "/filebox.FileboxService/UpdateFile",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(FileboxServiceServer).Update(ctx, req.(*UpdateFileRequest))
+		return srv.(FileboxServiceServer).UpdateFile(ctx, req.(*UpdateFileRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -186,7 +186,7 @@ func _FileboxService_GetFile_Handler(srv interface{}, ctx context.Context, dec f
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/auth.FileboxService/GetFile",
+		FullMethod: "/filebox.FileboxService/GetFile",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(FileboxServiceServer).GetFile(ctx, req.(*GetFileRequest))
@@ -195,7 +195,7 @@ func _FileboxService_GetFile_Handler(srv interface{}, ctx context.Context, dec f
 }
 
 func _FileboxService_GetListOfAllFiles_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GetListOfAllFilesResponse)
+	in := new(GetListOfAllFilesRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -204,10 +204,10 @@ func _FileboxService_GetListOfAllFiles_Handler(srv interface{}, ctx context.Cont
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/auth.FileboxService/GetListOfAllFiles",
+		FullMethod: "/filebox.FileboxService/GetListOfAllFiles",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(FileboxServiceServer).GetListOfAllFiles(ctx, req.(*GetListOfAllFilesResponse))
+		return srv.(FileboxServiceServer).GetListOfAllFiles(ctx, req.(*GetListOfAllFilesRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -222,7 +222,7 @@ func _FileboxService_DeleteFile_Handler(srv interface{}, ctx context.Context, de
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/auth.FileboxService/DeleteFile",
+		FullMethod: "/filebox.FileboxService/DeleteFile",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(FileboxServiceServer).DeleteFile(ctx, req.(*DeleteFileRequest))
@@ -240,7 +240,7 @@ func _FileboxService_SendFileToPerson_Handler(srv interface{}, ctx context.Conte
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/auth.FileboxService/SendFileToPerson",
+		FullMethod: "/filebox.FileboxService/SendFileToPerson",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(FileboxServiceServer).SendFileToPerson(ctx, req.(*SendFileToPersonRequest))
@@ -252,7 +252,7 @@ func _FileboxService_SendFileToPerson_Handler(srv interface{}, ctx context.Conte
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
 var FileboxService_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "auth.FileboxService",
+	ServiceName: "filebox.FileboxService",
 	HandlerType: (*FileboxServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
@@ -260,8 +260,8 @@ var FileboxService_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _FileboxService_SendFile_Handler,
 		},
 		{
-			MethodName: "Update",
-			Handler:    _FileboxService_Update_Handler,
+			MethodName: "UpdateFile",
+			Handler:    _FileboxService_UpdateFile_Handler,
 		},
 		{
 			MethodName: "GetFile",

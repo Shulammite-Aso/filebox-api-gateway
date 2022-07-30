@@ -8,12 +8,13 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-type UpdateFileRequestBody struct {
-	File []byte `json:"file"`
+type SendFileToPersonRequestBody struct {
+	File     []byte `json:"file"`
+	Username string `json:"username"`
 }
 
-func UpdateFile(ctx *gin.Context, c proto.FileboxServiceClient) {
-	body := UpdateFileRequestBody{}
+func SendFileToPerson(ctx *gin.Context, c proto.FileboxServiceClient) {
+	body := SendFileToPersonRequestBody{}
 
 	if err := ctx.BindJSON(&body); err != nil {
 		ctx.AbortWithError(http.StatusBadRequest, err)
@@ -22,9 +23,10 @@ func UpdateFile(ctx *gin.Context, c proto.FileboxServiceClient) {
 
 	username, _ := ctx.Get("username")
 
-	res, err := c.UpdateFile(context.Background(), &proto.UpdateFileRequest{
-		Username: username.(string),
-		File:     body.File,
+	res, err := c.SendFileToPerson(context.Background(), &proto.SendFileToPersonRequest{
+		Username:       body.Username,
+		File:           body.File,
+		SenderUsername: username.(string),
 	})
 
 	if err != nil {

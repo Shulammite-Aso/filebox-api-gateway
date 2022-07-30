@@ -1,13 +1,13 @@
 syntax = "proto3";
-package auth;
+package filebox;
 
 option go_package = "./pkg/auth/proto";
 
 service FileboxService {
     rpc SendFile(SendFileRequest) returns (SendFileResponse) {}
-    rpc Update(UpdateFileRequest) returns (UpdateFileResponse) {}
+    rpc UpdateFile(UpdateFileRequest) returns (UpdateFileResponse) {}
     rpc GetFile(GetFileRequest) returns (GetFileResponse) {}
-    rpc GetListOfAllFiles(GetListOfAllFilesResponse) returns (GetListOfAllFilesResponse) {}
+    rpc GetListOfAllFiles(GetListOfAllFilesRequest) returns (GetListOfAllFilesResponse) {}
     rpc DeleteFile(DeleteFileRequest) returns (DeleteFileResponse) {}
     rpc SendFileToPerson(SendFileToPersonRequest) returns (SendFileToPersonResponse) {}
   }
