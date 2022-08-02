@@ -2,6 +2,7 @@ package routes
 
 import (
 	"context"
+	"fmt"
 	"net/http"
 
 	"github.com/Shulammite-Aso/filebox-api-gateway/pkg/auth/proto"
@@ -28,9 +29,12 @@ func Register(ctx *gin.Context, c proto.AuthServiceClient) {
 	})
 
 	if err != nil {
+		fmt.Println("Error msg:", err)
 		ctx.AbortWithError(http.StatusBadGateway, err)
 		return
 	}
+
+	fmt.Println("Register response:", res.Message)
 
 	ctx.JSON(http.StatusCreated, &res)
 }
