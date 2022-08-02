@@ -4,30 +4,24 @@ package filebox;
 option go_package = "./pkg/auth/proto";
 
 service FileboxService {
-    rpc SendFile(SendFileRequest) returns (SendFileResponse) {}
-    rpc UpdateFile(UpdateFileRequest) returns (UpdateFileResponse) {}
+    rpc SendFile(SendFileRequest) returns (SuccessMessage) {}
+    rpc UpdateFile(UpdateFileRequest) returns (SuccessMessage) {}
     rpc GetFile(GetFileRequest) returns (GetFileResponse) {}
     rpc GetListOfAllFiles(GetListOfAllFilesRequest) returns (GetListOfAllFilesResponse) {}
-    rpc DeleteFile(DeleteFileRequest) returns (DeleteFileResponse) {}
-    rpc SendFileToPerson(SendFileToPersonRequest) returns (SendFileToPersonResponse) {}
+    rpc DeleteFile(DeleteFileRequest) returns (SuccessMessage) {}
+    rpc SendFileToPerson(SendFileToPersonRequest) returns (SuccessMessage) {}
   }
+
+// REQUESTS
 
 message SendFileRequest {
     string username = 1;
     bytes file = 2;
   }
   
-  message SendFileResponse {
-    string error = 1;
-  }
-  
   message UpdateFileRequest {
     string username = 1;
     bytes file = 2;
-  }
-  
-  message UpdateFileResponse {
-    string error = 1;
   }
 
   message GetFileRequest {
@@ -35,35 +29,31 @@ message SendFileRequest {
     string fileName = 2;
   }
 
-  message GetFileResponse {
-    string fileURL = 1;
-    string error = 2;
-  }
-
   message GetListOfAllFilesRequest {
     string username = 1;
   }
-
-  message GetListOfAllFilesResponse {
-    bytes allFiles = 1;
-    string error = 2;
-  }
-  
+   
   message DeleteFileRequest {
     string username = 1;
     string fileName = 2;
   }
-
-  message DeleteFileResponse {
-    string error = 1;
-  }
-
+  
   message SendFileToPersonRequest {
     string username = 1;
     string senderUsername = 2;
     bytes file = 3;
   }
 
-  message SendFileToPersonResponse {
-    string error = 1;
+  // RESPONSES
+  message GetFileResponse {
+    string fileURL = 1;
   }
+
+  message SuccessMessage {
+    string message = 1;
+  }
+
+  message GetListOfAllFilesResponse {
+    repeated string allFiles = 1;
+  }
+ 

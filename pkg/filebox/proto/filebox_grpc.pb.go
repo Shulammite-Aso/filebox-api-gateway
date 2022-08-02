@@ -22,12 +22,12 @@ const _ = grpc.SupportPackageIsVersion7
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type FileboxServiceClient interface {
-	SendFile(ctx context.Context, in *SendFileRequest, opts ...grpc.CallOption) (*SendFileResponse, error)
-	UpdateFile(ctx context.Context, in *UpdateFileRequest, opts ...grpc.CallOption) (*UpdateFileResponse, error)
+	SendFile(ctx context.Context, in *SendFileRequest, opts ...grpc.CallOption) (*SuccessMessage, error)
+	UpdateFile(ctx context.Context, in *UpdateFileRequest, opts ...grpc.CallOption) (*SuccessMessage, error)
 	GetFile(ctx context.Context, in *GetFileRequest, opts ...grpc.CallOption) (*GetFileResponse, error)
 	GetListOfAllFiles(ctx context.Context, in *GetListOfAllFilesRequest, opts ...grpc.CallOption) (*GetListOfAllFilesResponse, error)
-	DeleteFile(ctx context.Context, in *DeleteFileRequest, opts ...grpc.CallOption) (*DeleteFileResponse, error)
-	SendFileToPerson(ctx context.Context, in *SendFileToPersonRequest, opts ...grpc.CallOption) (*SendFileToPersonResponse, error)
+	DeleteFile(ctx context.Context, in *DeleteFileRequest, opts ...grpc.CallOption) (*SuccessMessage, error)
+	SendFileToPerson(ctx context.Context, in *SendFileToPersonRequest, opts ...grpc.CallOption) (*SuccessMessage, error)
 }
 
 type fileboxServiceClient struct {
@@ -38,8 +38,8 @@ func NewFileboxServiceClient(cc grpc.ClientConnInterface) FileboxServiceClient {
 	return &fileboxServiceClient{cc}
 }
 
-func (c *fileboxServiceClient) SendFile(ctx context.Context, in *SendFileRequest, opts ...grpc.CallOption) (*SendFileResponse, error) {
-	out := new(SendFileResponse)
+func (c *fileboxServiceClient) SendFile(ctx context.Context, in *SendFileRequest, opts ...grpc.CallOption) (*SuccessMessage, error) {
+	out := new(SuccessMessage)
 	err := c.cc.Invoke(ctx, "/filebox.FileboxService/SendFile", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -47,8 +47,8 @@ func (c *fileboxServiceClient) SendFile(ctx context.Context, in *SendFileRequest
 	return out, nil
 }
 
-func (c *fileboxServiceClient) UpdateFile(ctx context.Context, in *UpdateFileRequest, opts ...grpc.CallOption) (*UpdateFileResponse, error) {
-	out := new(UpdateFileResponse)
+func (c *fileboxServiceClient) UpdateFile(ctx context.Context, in *UpdateFileRequest, opts ...grpc.CallOption) (*SuccessMessage, error) {
+	out := new(SuccessMessage)
 	err := c.cc.Invoke(ctx, "/filebox.FileboxService/UpdateFile", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -74,8 +74,8 @@ func (c *fileboxServiceClient) GetListOfAllFiles(ctx context.Context, in *GetLis
 	return out, nil
 }
 
-func (c *fileboxServiceClient) DeleteFile(ctx context.Context, in *DeleteFileRequest, opts ...grpc.CallOption) (*DeleteFileResponse, error) {
-	out := new(DeleteFileResponse)
+func (c *fileboxServiceClient) DeleteFile(ctx context.Context, in *DeleteFileRequest, opts ...grpc.CallOption) (*SuccessMessage, error) {
+	out := new(SuccessMessage)
 	err := c.cc.Invoke(ctx, "/filebox.FileboxService/DeleteFile", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -83,8 +83,8 @@ func (c *fileboxServiceClient) DeleteFile(ctx context.Context, in *DeleteFileReq
 	return out, nil
 }
 
-func (c *fileboxServiceClient) SendFileToPerson(ctx context.Context, in *SendFileToPersonRequest, opts ...grpc.CallOption) (*SendFileToPersonResponse, error) {
-	out := new(SendFileToPersonResponse)
+func (c *fileboxServiceClient) SendFileToPerson(ctx context.Context, in *SendFileToPersonRequest, opts ...grpc.CallOption) (*SuccessMessage, error) {
+	out := new(SuccessMessage)
 	err := c.cc.Invoke(ctx, "/filebox.FileboxService/SendFileToPerson", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -96,12 +96,12 @@ func (c *fileboxServiceClient) SendFileToPerson(ctx context.Context, in *SendFil
 // All implementations must embed UnimplementedFileboxServiceServer
 // for forward compatibility
 type FileboxServiceServer interface {
-	SendFile(context.Context, *SendFileRequest) (*SendFileResponse, error)
-	UpdateFile(context.Context, *UpdateFileRequest) (*UpdateFileResponse, error)
+	SendFile(context.Context, *SendFileRequest) (*SuccessMessage, error)
+	UpdateFile(context.Context, *UpdateFileRequest) (*SuccessMessage, error)
 	GetFile(context.Context, *GetFileRequest) (*GetFileResponse, error)
 	GetListOfAllFiles(context.Context, *GetListOfAllFilesRequest) (*GetListOfAllFilesResponse, error)
-	DeleteFile(context.Context, *DeleteFileRequest) (*DeleteFileResponse, error)
-	SendFileToPerson(context.Context, *SendFileToPersonRequest) (*SendFileToPersonResponse, error)
+	DeleteFile(context.Context, *DeleteFileRequest) (*SuccessMessage, error)
+	SendFileToPerson(context.Context, *SendFileToPersonRequest) (*SuccessMessage, error)
 	mustEmbedUnimplementedFileboxServiceServer()
 }
 
@@ -109,10 +109,10 @@ type FileboxServiceServer interface {
 type UnimplementedFileboxServiceServer struct {
 }
 
-func (UnimplementedFileboxServiceServer) SendFile(context.Context, *SendFileRequest) (*SendFileResponse, error) {
+func (UnimplementedFileboxServiceServer) SendFile(context.Context, *SendFileRequest) (*SuccessMessage, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method SendFile not implemented")
 }
-func (UnimplementedFileboxServiceServer) UpdateFile(context.Context, *UpdateFileRequest) (*UpdateFileResponse, error) {
+func (UnimplementedFileboxServiceServer) UpdateFile(context.Context, *UpdateFileRequest) (*SuccessMessage, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateFile not implemented")
 }
 func (UnimplementedFileboxServiceServer) GetFile(context.Context, *GetFileRequest) (*GetFileResponse, error) {
@@ -121,10 +121,10 @@ func (UnimplementedFileboxServiceServer) GetFile(context.Context, *GetFileReques
 func (UnimplementedFileboxServiceServer) GetListOfAllFiles(context.Context, *GetListOfAllFilesRequest) (*GetListOfAllFilesResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetListOfAllFiles not implemented")
 }
-func (UnimplementedFileboxServiceServer) DeleteFile(context.Context, *DeleteFileRequest) (*DeleteFileResponse, error) {
+func (UnimplementedFileboxServiceServer) DeleteFile(context.Context, *DeleteFileRequest) (*SuccessMessage, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteFile not implemented")
 }
-func (UnimplementedFileboxServiceServer) SendFileToPerson(context.Context, *SendFileToPersonRequest) (*SendFileToPersonResponse, error) {
+func (UnimplementedFileboxServiceServer) SendFileToPerson(context.Context, *SendFileToPersonRequest) (*SuccessMessage, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method SendFileToPerson not implemented")
 }
 func (UnimplementedFileboxServiceServer) mustEmbedUnimplementedFileboxServiceServer() {}
