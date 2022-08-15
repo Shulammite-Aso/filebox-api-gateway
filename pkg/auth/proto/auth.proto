@@ -29,13 +29,17 @@ message RegisterRequest {
   // RESPONSES
 
   message RegisterResponse {
-    string message = 1;
+    string token = 1;
+    string message = 2;
+    string error = 3;
   }
 
   message LoginResponse { 
     string token = 1; 
+    string error = 2;
   }
 
   message ValidateResponse {
-    string username = 2;
+    string username = 1;
+    string error = 2;
   }
