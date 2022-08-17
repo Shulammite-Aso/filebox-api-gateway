@@ -45,3 +45,23 @@ func (c *AuthMiddlewareConfig) AuthRequired(ctx *gin.Context) {
 
 	ctx.Next()
 }
+
+func (c *AuthMiddlewareConfig) VerifyReceiver(ctx *gin.Context) {
+
+	// Get reciever username from the request, then use it to request for email of the user from auth service
+
+	receiverUsername, _ := ctx.Get("receiverUsername")
+
+	res, err := c.svc.Client.VerifyReceiver(context.Background(), &proto.VerifyRequest{
+		Username: receiverUsername.(string),
+	})
+
+	if err != nil {
+		ctx.AbortWithStatus(http.StatusNotFound)
+		return
+	}
+
+	ctx.Set("email", res.Email)
+
+	ctx.Next()
+}

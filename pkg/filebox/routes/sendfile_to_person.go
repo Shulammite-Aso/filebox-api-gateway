@@ -9,8 +9,8 @@ import (
 )
 
 type SendFileToPersonRequestBody struct {
-	File     []byte `json:"file"`
-	Username string `json:"username"`
+	File             []byte `json:"file"`
+	ReceiverUsername string `json:"receiverUsername"`
 }
 
 func SendFileToPerson(ctx *gin.Context, c proto.FileboxServiceClient) {
@@ -22,9 +22,11 @@ func SendFileToPerson(ctx *gin.Context, c proto.FileboxServiceClient) {
 	}
 
 	username, _ := ctx.Get("username")
+	email, _ := ctx.Get("email")
 
 	res, err := c.SendFileToPerson(context.Background(), &proto.SendFileToPersonRequest{
-		Username:       body.Username,
+		Username:       body.ReceiverUsername,
+		Email:          email.(string),
 		File:           body.File,
 		SenderUsername: username.(string),
 	})

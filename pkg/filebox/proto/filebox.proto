@@ -16,12 +16,14 @@ service FileboxService {
 
 message SendFileRequest {
     string username = 1;
-    bytes file = 2;
+    string fileName = 2;
+    bytes file = 3;
   }
   
   message UpdateFileRequest {
     string username = 1;
-    bytes file = 2;
+    string fileName = 2;
+    bytes file = 3;
   }
 
   message GetFileRequest {
@@ -40,8 +42,10 @@ message SendFileRequest {
   
   message SendFileToPersonRequest {
     string username = 1;
-    string senderUsername = 2;
-    bytes file = 3;
+    string fileName = 2;
+    string email = 3;
+    string senderUsername = 4;
+    bytes file = 5;
   }
 
   // RESPONSES
