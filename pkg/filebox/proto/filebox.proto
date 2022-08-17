@@ -51,13 +51,16 @@ message SendFileRequest {
   // RESPONSES
   message GetFileResponse {
     string fileURL = 1;
+    string error = 2;
   }
 
   message SuccessMessage {
     string message = 1;
+    string error = 2;
   }
 
   message GetListOfAllFilesResponse {
     repeated string allFiles = 1;
+    string error = 2;
   }
  
