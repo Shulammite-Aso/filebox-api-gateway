@@ -21,7 +21,7 @@ func RegisterRoutes(r *gin.Engine, c *config.Config, authSvc *auth.ServiceClient
 	routes.PUT("/updatefile/", svc.UpdateFile)
 	routes.DELETE("deletefile/:fileName", svc.DeleteFile)
 	routes.POST("/sendfile-to-person", a.VerifyReceiver, svc.SendFileToPerson)
-	routes.GET("/get-list-of-all-files/:username", svc.GetListOfAllFiles)
+	routes.GET("/get-list-of-all-files", svc.GetListOfAllFiles)
 }
 
 func (svc *ServiceClient) SendFile(ctx *gin.Context) {
