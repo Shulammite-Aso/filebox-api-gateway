@@ -61,6 +61,5 @@ message SendFileRequest {
 
   message GetListOfAllFilesResponse {
     repeated string allFiles = 1;
-    string error = 2;
   }
  

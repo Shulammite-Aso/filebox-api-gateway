@@ -9,7 +9,8 @@ import (
 )
 
 type SendFileRequestBody struct {
-	File []byte `json:"file"`
+	FileName string `json:"fileName"`
+	File     []byte `json:"file"`
 }
 
 func SendFile(ctx *gin.Context, c proto.FileboxServiceClient) {
@@ -24,6 +25,7 @@ func SendFile(ctx *gin.Context, c proto.FileboxServiceClient) {
 
 	res, err := c.SendFile(context.Background(), &proto.SendFileRequest{
 		Username: username.(string),
+		FileName: body.FileName,
 		File:     body.File,
 	})
 
