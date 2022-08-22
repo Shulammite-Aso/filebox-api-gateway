@@ -2,6 +2,7 @@ package routes
 
 import (
 	"context"
+	"log"
 	"net/http"
 
 	"github.com/Shulammite-Aso/filebox-api-gateway/pkg/filebox/proto"
@@ -18,6 +19,7 @@ func SendFileToPerson(ctx *gin.Context, c proto.FileboxServiceClient) {
 	body := SendFileToPersonRequestBody{}
 
 	if err := ctx.BindJSON(&body); err != nil {
+		log.Println(err)
 		ctx.AbortWithError(http.StatusBadRequest, err)
 		return
 	}
@@ -34,6 +36,7 @@ func SendFileToPerson(ctx *gin.Context, c proto.FileboxServiceClient) {
 	})
 
 	if err != nil {
+		log.Println(err)
 		ctx.AbortWithError(http.StatusBadGateway, err)
 		return
 	}
