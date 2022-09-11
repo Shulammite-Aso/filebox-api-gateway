@@ -10,5 +10,5 @@ spec:
     - name: gateway-svc
       protocol: TCP
       port: 3000
-      targetPort: fb-api-gateway-port
+      targetPort: api-gy-port
       nodePort: 31000
